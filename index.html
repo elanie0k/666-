@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>For My Adagio ♡</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap');
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #390812;
+    color: #f8e7b0;
+    font-family: "Cormorant Garamond", serif;
+}
+
+body {
+    touch-action: none;
+}
+
+/* =========================
+   MAIN BACKGROUND
+========================= */
+
+#app {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 45%, rgba(117, 20, 42, .65), transparent 55%),
+        linear-gradient(135deg, #26050c, #4b0b1b 48%, #28050d);
+}
+
+/* subtle royal texture */
+#app::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .14;
+    pointer-events: none;
+    background-image:
+        radial-gradient(#f3d27a 1px, transparent 1px);
+    background-size: 26px 26px;
+    mask-image: linear-gradient(to bottom, transparent, black, transparent);
+}
+
+/* =========================
+   GOLD ROYAL BORDER
+========================= */
+
+.royal-border {
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(224, 180, 77, .55);
+    pointer-events: none;
+    z-index: 20;
+}
+
+.royal-border::before,
+.royal-border::after {
+    content: "✦";
+    position: absolute;
+    color: #e4bd58;
+    font-size: 20px;
+}
+
+.royal-border::before {
+    left: -7px;
+    top: -15px;
+}
+
+.royal-border::after {
+    right: -7px;
+    bottom: -15px;
+}
+
+.corner {
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    border-color: rgba(222, 182, 86, .75);
+    z-index: 21;
+    pointer-events: none;
+}
+
+.corner.tl {
+    top: 20px;
+    left: 20px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+    border-radius: 8px 0 0 0;
+}
+
+.corner.tr {
+    top: 20px;
+    right: 20px;
+    border-top: 2px solid;
+    border-right: 2px solid;
+    border-radius: 0 8px 0 0;
+}
+
+.corner.bl {
+    bottom: 20px;
+    left: 20px;
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+    border-radius: 0 0 0 8px;
+}
+
+.corner.br {
+    bottom: 20px;
+    right: 20px;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+    border-radius: 0 0 8px 0;
+}
+
+/* =========================
+   PASSWORD SCREEN
+========================= */
+
+.screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    transition: opacity .8s ease, visibility .8s ease;
+}
+
+.screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.password-card {
+    width: min(430px, 90vw);
+    text-align: center;
+    padding: 42px 30px 38px;
+    position: relative;
+}
+
+.crown {
+    font-size: 42px;
+    color: #e2bb58;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 8px rgba(230,190,80,.3));
+}
+
+.password-title {
+    font-size: clamp(25px, 7vw, 38px);
+    font-weight: 500;
+    letter-spacing: .5px;
+    margin: 0 0 30px;
+    color: #f6e4af;
+}
+
+.password-sub {
+    font-family: "Great Vibes", cursive;
+    color: #dca9b4;
+    font-size: 25px;
+    margin-bottom: 24px;
+}
+
+#codeInput {
+    width: 190px;
+    height: 64px;
+    border: 1px solid #cda84f;
+    outline: none;
+    border-radius: 15px;
+    background: rgba(25, 3, 9, .5);
+    color: #ffe9a9;
+    text-align: center;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 31px;
+    letter-spacing: 14px;
+    padding-left: 14px;
+    box-shadow:
+        inset 0 0 15px rgba(0,0,0,.25),
+        0 0 20px rgba(207,165,69,.08);
+}
+
+#codeInput:focus {
+    border-color: #f1d37a;
+    box-shadow: 0 0 20px rgba(229,190,81,.18);
+}
+
+.unlock-btn {
+    margin-top: 22px;
+    border: 1px solid #cda84f;
+    color: #f5dda0;
+    background: linear-gradient(135deg, #651328, #430b1a);
+    border-radius: 12px;
+    padding: 11px 28px;
+    font-family: inherit;
+    font-size: 18px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.unlock-btn:active {
+    transform: scale(.96);
+}
+
+.error {
+    height: 22px;
+    margin-top: 12px;
+    color: #ed9ba9;
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.error.show {
+    opacity: 1;
+}
+
+/* =========================
+   LOVE SCREEN
+========================= */
+
+#loveScreen {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .8s ease;
+}
+
+#loveScreen.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* =========================
+   SUCCESS MESSAGE
+========================= */
+
+#successMessage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 90%;
+    transform: translate(-50%, -50%) scale(.8);
+    text-align: center;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(38px, 10vw, 68px);
+    color: #f5d778;
+    text-shadow:
+        0 0 8px rgba(255,215,110,.6),
+        0 0 25px rgba(255,190,60,.35);
+    opacity: 0;
+    z-index: 100;
+    pointer-events: none;
+}
+
+#successMessage.show {
+    animation: successAppear 3.8s ease forwards;
+}
+
+@keyframes successAppear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.75);
+    }
+    15% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+    28%, 78% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.92);
+    }
+}
+
+/* =========================
+   HOLD MESSAGE
+========================= */
+
+#holdMessage {
+    position: absolute;
+    top: 16%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    text-align: center;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(34px, 9vw, 54px);
+    color: #f3dca0;
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 15;
+    pointer-events: none;
+}
+
+#holdMessage.show {
+    opacity: 1;
+}
+
+/* =========================
+   HEART AREA
+========================= */
+
+#heartArea {
+    position: absolute;
+    left: 50%;
+    top: 53%;
+    width: 260px;
+    height: 260px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#heart {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    background: #e85778;
+    transform: rotate(-45deg) scale(.65);
+    border-radius: 12px 0 12px 12px;
+    box-shadow:
+        0 0 18px rgba(244,84,121,.45),
+        0 0 50px rgba(244,84,121,.18);
+    transition: transform .12s linear;
+}
+
+#heart::before,
+#heart::after {
+    content: "";
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    background: inherit;
+    border-radius: 50%;
+}
+
+#heart::before {
+    top: -37px;
+    left: 0;
+}
+
+#heart::after {
+    left: 37px;
+    top: 0;
+}
+
+#heartGlow {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 128, 160, .25);
+    filter: blur(25px);
+    opacity: .5;
+    transition: transform .2s linear, opacity .2s;
+}
+
+/* =========================
+   FINAL MESSAGE
+========================= */
+
+#finalMessage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(700px, 90vw);
+    transform: translate(-50%, -50%) scale(.5);
+    text-align: center;
+    opacity: 0;
+    z-index: 80;
+    pointer-events: none;
+    transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.17,.67,.25,1.2);
+}
+
+#finalMessage.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.final-love {
+    font-family: "Great Vibes", cursive;
+    color: #ffe6a2;
+    font-size: clamp(36px, 8vw, 64px);
+    line-height: 1.15;
+    text-shadow:
+        0 0 8px rgba(255,220,130,.7),
+        0 0 30px rgba(255,180,80,.3);
+}
+
+.final-small {
+    margin-top: 16px;
+    color: #e7b7c1;
+    font-size: clamp(17px, 4vw, 23px);
+    letter-spacing: 1px;
+}
+
+/* =========================
+   HELLO KITTY STYLE STICKER
+========================= */
+
+#kittySticker {
+    position: absolute;
+    right: -180px;
+    bottom: 9%;
+    width: 135px;
+    height: 135px;
+    z-index: 90;
+    opacity: 0;
+    transition: right 1.3s cubic-bezier(.17,.67,.25,1.25), opacity 1s;
+    pointer-events: none;
+}
+
+/* Original cute cat illustration rather than an external image */
+.kitty-head {
+    position: absolute;
+    width: 100px;
+    height: 82px;
+    left: 17px;
+    top: 24px;
+    background: #fff;
+    border-radius: 48% 48% 45% 45%;
+    border: 2px solid #d7b8bd;
+    transform: rotate(-4deg);
+}
+
+.kitty-head::before,
+.kitty-head::after {
+    content: "";
+    position: absolute;
+    top: -19px;
+    width: 39px;
+    height: 39px;
+    background: #fff;
+    border: 2px solid #d7b8bd;
+    z-index: -1;
+}
+
+.kitty-head::before {
+    left: 5px;
+    transform: rotate(-35deg) skewY(12deg);
+}
+
+.kitty-head::after {
+    right: 5px;
+    transform: rotate(35deg) skewY(-12deg);
+}
+
+.kitty-eye {
+    position: absolute;
+    width: 7px;
+    height: 10px;
+    background: #2b1820;
+    border-radius: 50%;
+    top: 39px;
+}
+
+.eye-left { left: 25px; }
+.eye-right { right: 25px; }
+
+.kitty-nose {
+    position: absolute;
+    width: 9px;
+    height: 7px;
+    background: #e2a72c;
+    border-radius: 50%;
+    left: 45px;
+    top: 49px;
+}
+
+.whisker {
+    position: absolute;
+    width: 22px;
+    height: 1px;
+    background: #3a2229;
+    top: 51px;
+}
+
+.w1 { left: 1px; transform: rotate(10deg); }
+.w2 { left: 0; top: 59px; transform: rotate(-5deg); }
+.w3 { right: 1px; transform: rotate(-10deg); }
+.w4 { right: 0; top: 59px; transform: rotate(5deg); }
+
+.bow {
+    position: absolute;
+    right: 3px;
+    top: 9px;
+    width: 27px;
+    height: 20px;
+    background: #d94d6c;
+    border-radius: 50%;
+    transform: rotate(8deg);
+}
+
+.bow::before,
+.bow::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 18px;
+    background: #d94d6c;
+    top: 1px;
+}
+
+.bow::before {
+    right: 17px;
+    border-radius: 50% 30% 30% 50%;
+}
+
+.bow::after {
+    left: 17px;
+    border-radius: 30% 50% 50% 30%;
+}
+
+.sticker-heart {
+    position: absolute;
+    left: 0;
+    bottom: 7px;
+    color: #e35d78;
+    font-size: 32px;
+}
+
+/* =========================
+   CONFETTI
+========================= */
+
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 14px;
+    top: 50%;
+    left: 50%;
+    z-index: 200;
+    pointer-events: none;
+    animation: confettiFall var(--duration) cubic-bezier(.12,.7,.3,1) forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            translate(
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y))
+            )
+            rotate(var(--rotation))
+            scale(.7);
+        opacity: 0;
+    }
+}
+
+/* =========================
+   HEART SHARDS
+========================= */
+
+.shard {
+    position: absolute;
+    width: 20px;
+    height: 26px;
+    background: #e95678;
+    clip-path: polygon(50% 0%, 100% 38%, 75% 100%, 0% 65%);
+    z-index: 60;
+    cursor: grab;
+    touch-action: none;
+    box-shadow: 0 0 12px rgba(239,75,112,.65);
+}
+
+.shard.dragging {
+    cursor: grabbing;
+    filter: brightness(1.35);
+    z-index: 150;
+}
+
+.spark {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #ffe8a0;
+    pointer-events: none;
+    z-index: 300;
+    box-shadow: 0 0 10px #ffe7a1;
+    animation: spark .8s ease-out forwards;
+}
+
+@keyframes spark {
+    from {
+        opacity: 1;
+        transform: translate(0,0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(var(--sx),var(--sy)) scale(0);
+    }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 500px) {
+    .royal-border {
+        inset: 9px;
+    }
+
+    .corner {
+        width: 50px;
+        height: 50px;
+    }
+
+    .password-card {
+        padding: 25px 15px;
+    }
+
+    #heartArea {
+        width: 230px;
+        height: 230px;
+    }
+
+    #kittySticker {
+        transform: scale(.82);
+        transform-origin: bottom right;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+    <div class="royal-border"></div>
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <!-- PASSWORD SCREEN -->
+    <section id="passwordScreen" class="screen">
+
+        <div class="password-card">
+
+            <div class="crown">♛</div>
+
+            <div class="password-sub">
+                A tiny royal secret...
+            </div>
+
+            <h1 class="password-title">
+                Enter the code of love to unlock.
+            </h1>
+
+            <input
+                id="codeInput"
+                type="password"
+                inputmode="numeric"
+                maxlength="3"
+                autocomplete="off"
+                aria-label="Love code"
+            >
+
+            <br>
+
+            <button class="unlock-btn" id="unlockBtn">
+                Unlock ♡
+            </button>
+
+            <div class="error" id="errorMessage">
+                Hmm... try again, my love ♡
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOVE SCREEN -->
+    <section id="loveScreen" class="screen">
+
+        <div id="successMessage">
+            Yayyy, you did it! Good boy.
+        </div>
+
+        <div id="holdMessage">
+            Press and hold, my baby.
+        </div>
+
+        <div id="heartArea">
+
+            <div id="heartGlow"></div>
+
+            <div id="heart"></div>
+
+        </div>
+
+        <div id="finalMessage">
+
+            <div class="final-love">
+                I LOVE YOU SO MUCH
+            </div>
+
+            <div class="final-small">
+                AND I'M PROUD OF YOU<br>
+                IL MIO ADAGIO ♡
+            </div>
+
+        </div>
+
+        <!-- Cute original cat sticker -->
+        <div id="kittySticker">
+
+            <div class="kitty-head">
+
+                <div class="kitty-eye eye-left"></div>
+                <div class="kitty-eye eye-right"></div>
+                <div class="kitty-nose"></div>
+
+                <div class="whisker w1"></div>
+                <div class="whisker w2"></div>
+                <div class="whisker w3"></div>
+                <div class="whisker w4"></div>
+
+                <div class="bow"></div>
+
+            </div>
+
+            <div class="sticker-heart">♥</div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const passwordScreen = document.getElementById("passwordScreen");
+const loveScreen = document.getElementById("loveScreen");
+const codeInput = document.getElementById("codeInput");
+const unlockBtn = document.getElementById("unlockBtn");
+const errorMessage = document.getElementById("errorMessage");
+
+const successMessage = document.getElementById("successMessage");
+const holdMessage = document.getElementById("holdMessage");
+
+const heartArea = document.getElementById("heartArea");
+const heart = document.getElementById("heart");
+const heartGlow = document.getElementById("heartGlow");
+
+const finalMessage = document.getElementById("finalMessage");
+const kittySticker = document.getElementById("kittySticker");
+
+
+/* =========================================
+   PASSWORD
+========================================= */
+
+function unlock() {
+
+    const code = codeInput.value.trim();
+
+    if (code === "666") {
+
+        passwordScreen.classList.add("hidden");
+
+        setTimeout(() => {
+
+            loveScreen.classList.add("active");
+
+            createGoldenConfetti();
+
+            successMessage.classList.add("show");
+
+            setTimeout(() => {
+                holdMessage.classList.add("show");
+            }, 3800);
+
+        }, 500);
+
+    } else {
+
+        errorMessage.classList.add("show");
+
+        codeInput.animate(
+            [
+                { transform: "translateX(0)" },
+                { transform: "translateX(-7px)" },
+                { transform: "translateX(7px)" },
+                { transform: "translateX(-5px)" },
+                { transform: "translateX(0)" }
+            ],
+            {
+                duration: 350
+            }
+        );
+
+        setTimeout(() => {
+            errorMessage.classList.remove("show");
+        }, 1800);
+
+    }
+}
+
+unlockBtn.addEventListener("click", unlock);
+
+codeInput.addEventListener("keydown", (event) => {
+
+    if (event.key === "Enter") {
+        unlock();
+    }
+
+});
+
+
+/* =========================================
+   GOLD CONFETTI
+========================================= */
+
+function createGoldenConfetti() {
+
+    const pieces = 75;
+
+    for (let i = 0; i < pieces; i++) {
+
+        const piece = document.createElement("div");
+
+        piece.className = "confetti";
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 120 + Math.random() * 430;
+
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+
+        const rotation = Math.random() * 900 - 450;
+        const duration = 1.5 + Math.random() * 2.2;
+
+        piece.style.setProperty("--x", `${x}px`);
+        piece.style.setProperty("--y", `${y}px`);
+        piece.style.setProperty("--rotation", `${rotation}deg`);
+        piece.style.setProperty("--duration", `${duration}s`);
+
+        const goldColors = [
+            "#f7dc87",
+            "#e9bd52",
+            "#fff0ae",
+            "#c9962f",
+            "#f4ce68"
+        ];
+
+        piece.style.background =
+            goldColors[Math.floor(Math.random() * goldColors.length)];
+
+        piece.style.width =
+            `${5 + Math.random() * 7}px`;
+
+        piece.style.height =
+            `${8 + Math.random() * 12}px`;
+
+        loveScreen.appendChild(piece);
+
+        setTimeout(() => {
+            piece.remove();
+        }, duration * 1000 + 200);
+    }
+}
+
+
+/* =========================================
+   HEART HOLD MECHANIC
+========================================= */
+
+let holding = false;
+let holdStart = 0;
+let holdAnimation = null;
+
+const HOLD_DURATION = 12000; // 12 seconds
+
+
+function startHolding(event) {
+
+    if (holding) return;
+
+    if (event.pointerType === "mouse" && event.button !== 0) {
+        return;
+    }
+
+    holding = true;
+    holdStart = performance.now();
+
+    holdMessage.style.opacity = "0";
+
+    heart.setPointerCapture?.(event.pointerId);
+
+    updateHeart(event);
+}
+
+
+function updateHeart(event) {
+
+    if (!holding) return;
+
+    const elapsed = performance.now() - holdStart;
+
+    const progress =
+        Math.min(elapsed / HOLD_DURATION, 1);
+
+    /*
+       Smooth growth:
+       starts small and becomes enormous near the end.
+    */
+
+    const scale =
+        .65 + progress * 5.0;
+
+    heart.style.transform =
+        `rotate(-45deg) scale(${scale})`;
+
+    heartGlow.style.transform =
+        `scale(${1 + progress * 5})`;
+
+    heartGlow.style.opacity =
+        String(.35 + progress * .65);
+
+    if (progress >= 1) {
+
+        holding = false;
+
+        explodeHeart();
+
+        return;
+    }
+
+    holdAnimation =
+        requestAnimationFrame(updateHeart);
+}
+
+
+function stopHolding() {
+
+    if (!holding) return;
+
+    holding = false;
+
+    cancelAnimationFrame(holdAnimation);
+
+    /*
+       If released too early, the heart gently returns
+       to its original size.
+    */
+
+    heart.style.transition =
+        "transform .7s cubic-bezier(.17,.67,.25,1.2)";
+
+    heart.style.transform =
+        "rotate(-45deg) scale(.65)";
+
+    heartGlow.style.transform =
+        "scale(1)";
+
+    heartGlow.style.opacity = ".5";
+
+    setTimeout(() => {
+        heart.style.transition = "transform .12s linear";
+    }, 700);
+
+    holdMessage.style.opacity = "1";
+}
+
+
+/* Pointer events work on both mobile and desktop */
+
+heartArea.addEventListener("pointerdown", startHolding);
+
+window.addEventListener("pointerup", stopHolding);
+window.addEventListener("pointercancel", stopHolding);
+
+
+/* =========================================
+   HEART EXPLOSION
+========================================= */
+
+function explodeHeart() {
+
+    heartArea.style.pointerEvents = "none";
+
+    heart.style.transition =
+        "transform .7s cubic-bezier(.2,.8,.2,1)";
+
+    heart.style.transform =
+        "rotate(-45deg) scale(8)";
+
+    heartGlow.style.transform =
+        "scale(8)";
+
+    heartGlow.style.opacity = "1";
+
+    setTimeout(() => {
+
+        createHeartExplosion();
+
+        heart.style.opacity = "0";
+        heartGlow.style.opacity = "0";
+
+    }, 550);
+
+    setTimeout(() => {
+
+        finalMessage.classList.add("show");
+
+        kittySticker.style.opacity = "1";
+        kittySticker.style.right = "5%";
+
+    }, 850);
+
+}
+
+
+/* =========================================
+   HEART SHARDS
+========================================= */
+
+function createHeartExplosion() {
+
+    const shardCount = 28;
+
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight * .53;
+
+    for (let i = 0; i < shardCount; i++) {
+
+        const shard = document.createElement("div");
+
+        shard.className = "shard";
+
+        const angle =
+            Math.random() * Math.PI * 2;
+
+        const distance =
+            50 + Math.random() * 100;
+
+        const x =
+            centerX +
+            Math.cos(angle) * distance;
+
+        const y =
+            centerY +
+            Math.sin(angle) * distance;
+
+        shard.style.left = `${x}px`;
+        shard.style.top = `${y}px`;
+
+        const size =
+            12 + Math.random() * 20;
+
+        shard.style.width = `${size}px`;
+        shard.style.height = `${size * 1.3}px`;
+
+        shard.style.transform =
+            `rotate(${Math.random() * 360}deg)`;
+
+        document.body.appendChild(shard);
+
+        animateShardOut(shard, angle);
+
+        makeDraggable(shard);
+    }
+}
+
+
+/* =========================================
+   SHARD INITIAL MOVEMENT
+========================================= */
+
+function animateShardOut(shard, angle) {
+
+    const distance =
+        100 + Math.random() * 230;
+
+    const targetX =
+        Math.cos(angle) * distance;
+
+    const targetY =
+        Math.sin(angle) * distance;
+
+    const rotation =
+        Math.random() * 720 - 360;
+
+    const currentTransform =
+        shard.style.transform;
+
+    shard.animate(
+        [
+            {
+                transform:
+                    currentTransform
+            },
+            {
+                transform:
+                    `${currentTransform}
+                     translate(${targetX}px, ${targetY}px)
+                     rotate(${rotation}deg)`
+            }
+        ],
+        {
+            duration: 900 + Math.random() * 700,
+            easing: "cubic-bezier(.15,.8,.3,1)",
+            fill: "forwards"
+        }
+    );
+}
+
+
+/* =========================================
+   DRAGGABLE HEART SHARDS
+========================================= */
+
+function makeDraggable(element) {
+
+    let dragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    element.addEventListener("pointerdown", (event) => {
+
+        event.stopPropagation();
+
+        dragging = true;
+
+        element.classList.add("dragging");
+
+        const rect =
+            element.getBoundingClientRect();
+
+        offsetX =
+            event.clientX - rect.left;
+
+        offsetY =
+            event.clientY - rect.top;
+
+        element.setPointerCapture?.(event.pointerId);
+    });
+
+
+    element.addEventListener("pointermove", (event) => {
+
+        if (!dragging) return;
+
+        element.style.left =
+            `${event.clientX - offsetX}px`;
+
+        element.style.top =
+            `${event.clientY - offsetY}px`;
+
+        element.style.transform =
+            "rotate(15deg) scale(1.18)";
+    });
+
+
+    element.addEventListener("pointerup", () => {
+
+        if (!dragging) return;
+
+        dragging = false;
+
+        element.classList.remove("dragging");
+
+        element.releasePointerCapture?.(
+            event.pointerId
+        );
+
+        /*
+           Make the shard "fall" after being released.
+        */
+
+        const startTop =
+            parseFloat(element.style.top);
+
+        const startLeft =
+            parseFloat(element.style.left);
+
+        const fallDistance =
+            100 + Math.random() * 220;
+
+        const rotation =
+            Math.random() * 500 - 250;
+
+        const animation =
+            element.animate(
+                [
+                    {
+                        transform:
+                            "rotate(15deg) scale(1.18)",
+                        top:
+                            `${startTop}px`
+                    },
+                    {
+                        transform:
+                            `translateY(${fallDistance}px)
+                             rotate(${rotation}deg)
+                             scale(.7)`,
+                        top:
+                            `${startTop + fallDistance}px`
+                    }
+                ],
+                {
+                    duration: 900 + Math.random() * 500,
+                    easing: "cubic-bezier(.2,.7,.3,1)",
+                    fill: "forwards"
+                }
+            );
+
+        animation.onfinish = () => {
+
+            createSpark(
+                startLeft + 10,
+                startTop + fallDistance
+            );
+
+            element.animate(
+                [
+                    { opacity: 1, transform: "scale(.7)" },
+                    { opacity: 0, transform: "scale(0)" }
+                ],
+                {
+                    duration: 350,
+                    fill: "forwards"
+                }
+            );
+
+            setTimeout(() => {
+                element.remove();
+            }, 350);
+        };
+
+    });
+}
+
+
+/* =========================================
+   LITTLE LIGHT EXPLOSION
+========================================= */
+
+function createSpark(x, y) {
+
+    for (let i = 0; i < 7; i++) {
+
+        const spark =
+            document.createElement("div");
+
+        spark.className = "spark";
+
+        spark.style.left = `${x}px`;
+        spark.style.top = `${y}px`;
+
+        const angle =
+            Math.random() * Math.PI * 2;
+
+        const distance =
+            20 + Math.random() * 45;
+
+        spark.style.setProperty(
+            "--sx",
+            `${Math.cos(angle) * distance}px`
+        );
+
+        spark.style.setProperty(
+            "--sy",
+            `${Math.sin(angle) * distance}px`
+        );
+
+        document.body.appendChild(spark);
+
+        setTimeout(() => {
+            spark.remove();
+        }, 900);
+    }
+}
+
+
+/* =========================================
+   PREVENT LONG-PRESS BROWSER MENU
+========================================= */
+
+document.addEventListener(
+    "contextmenu",
+    event => event.preventDefault()
+);
+
+
+/* =========================================
+   KEEP PASSWORD INPUT CLEAN
+========================================= */
+
+codeInput.addEventListener("input", () => {
+
+    codeInput.value =
+        codeInput.value
+            .replace(/\D/g, "")
+            .slice(0, 3);
+
+});
+
+</script>
+
+</body>
+</html>
